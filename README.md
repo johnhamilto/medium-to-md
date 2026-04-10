@@ -59,7 +59,7 @@ The fastest way to grow the corpus:
 
 ### Project layout
 
-```
+```text
 src/
   converter.js     Pure DOM → Markdown function. Runs in both Chrome and Node (jsdom).
   content.js       Content script shim - invokes the converter and returns the result.
