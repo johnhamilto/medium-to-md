@@ -323,6 +323,7 @@
     if (/^\s*(fn \w+|let mut |impl |use \w+::)/m.test(c)) return 'rust';
     if (/^\s*(public |private |class \w+|System\.out)/m.test(c)) return 'java';
     if (/^\s*(SELECT |INSERT |UPDATE |DELETE |CREATE TABLE )/im.test(c)) return 'sql';
+    if (/^\s*[.#@]\w[^{]*\{/m.test(c) && /^\s*[\w-]+\s*:/m.test(c)) return 'css';
     if (/^\s*</.test(c) && /<\/\w+>/.test(c)) return 'html';
     if (/^\s*\{/.test(c) && /"[\w-]+"\s*:/.test(c)) return 'json';
     return '';

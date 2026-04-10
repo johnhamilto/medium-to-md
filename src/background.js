@@ -3,6 +3,7 @@
 
 const MENU_PARENT = 'medium-to-md-parent';
 const MENU_SAVE_MD = 'medium-to-md-save';
+const MENU_COPY_MD = 'medium-to-md-copy';
 const MENU_SAVE_HTML = 'medium-to-md-save-html';
 
 chrome.runtime.onInstalled.addListener(() => {
@@ -24,6 +25,12 @@ chrome.runtime.onInstalled.addListener(() => {
       contexts: ['page'],
     });
     chrome.contextMenus.create({
+      id: MENU_COPY_MD,
+      parentId: MENU_PARENT,
+      title: 'Copy as Markdown',
+      contexts: ['page'],
+    });
+    chrome.contextMenus.create({
       id: MENU_SAVE_HTML,
       parentId: MENU_PARENT,
       title: 'Save raw HTML (for testing)',
@@ -39,6 +46,8 @@ chrome.action.onClicked.addListener((tab) => {
 chrome.contextMenus.onClicked.addListener((info, tab) => {
   if (info.menuItemId === MENU_SAVE_MD) {
     void runMarkdownDownload(tab);
+  } else if (info.menuItemId === MENU_COPY_MD) {
+    void runMarkdownCopy(tab);
   } else if (info.menuItemId === MENU_SAVE_HTML) {
     void runHtmlDownload(tab);
   }
@@ -89,6 +98,51 @@ async function runMarkdownDownload(tab) {
     });
   } catch (err) {
     await notify(`Download failed: ${err.message || err}`);
+  }
+}
+
+// --- Copy to clipboard --------------------------------------------------
+
+async function runMarkdownCopy(tab) {
+  if (!tab || typeof tab.id !== 'number') {
+    await notify('No active tab to convert.');
+    return;
+  }
+
+  let injection;
+  try {
+    const results = await chrome.scripting.executeScript({
+      target: { tabId: tab.id },
+      files: ['src/converter.js', 'src/content.js'],
+      world: 'ISOLATED',
+    });
+    injection = results && results[0] && results[0].result;
+  } catch (err) {
+    await notify(`Couldn't read the page: ${err.message || err}`);
+    return;
+  }
+
+  if (!injection || !injection.ok) {
+    await notify(`Conversion failed: ${(injection && injection.error) || 'unknown error'}`);
+    return;
+  }
+
+  const { markdown } = injection;
+  if (!markdown) {
+    await notify('Converter produced empty output.');
+    return;
+  }
+
+  try {
+    await chrome.scripting.executeScript({
+      target: { tabId: tab.id },
+      world: 'ISOLATED',
+      func: (text) => navigator.clipboard.writeText(text),
+      args: [markdown],
+    });
+    await notify('Markdown copied to clipboard.');
+  } catch (err) {
+    await notify(`Clipboard write failed: ${err.message || err}`);
   }
 }
 

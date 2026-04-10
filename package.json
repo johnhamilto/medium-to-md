@@ -4,7 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "bun tests/converter.test.js"
+    "test": "bun tests/converter.test.js",
+    "dist": "mkdir -p dist && rm -f dist/medium-to-md.zip && zip dist/medium-to-md.zip manifest.json LICENSE src/*.js icons/*.png && echo 'Built dist/medium-to-md.zip'"
   },
   "devDependencies": {
     "jsdom": "^24.0.0"
