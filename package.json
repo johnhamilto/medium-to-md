@@ -1,0 +1,12 @@
+{
+  "name": "medium-to-md",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "bun tests/converter.test.js"
+  },
+  "devDependencies": {
+    "jsdom": "^24.0.0"
+  }
+}
