@@ -69,7 +69,9 @@ icons/             Toolbar icons (16/48/128) + source SVG.
 tests/
   converter.test.js  Bun + jsdom harness with auto-discovery and smoke suite.
   fixtures/        Committed synthetic fixtures.
+store-assets/      Chrome Web Store listing images (promo tiles, source SVGs).
 examples/          Gitignored - drop real Medium .html files here for local testing.
+dist/              Gitignored - `bun run dist` outputs the uploadable .zip here.
 ```
 
 ## How parsing works

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 280">
+  <rect width="440" height="280" fill="#1a8917"/>
+  <rect x="20" y="20" width="240" height="240" rx="16" fill="rgba(255,255,255,0.12)"/>
+  <text x="140" y="120" font-family="-apple-system, Helvetica, sans-serif" font-size="72" font-weight="800" fill="white" text-anchor="middle">M</text>
+  <path d="M 140 140 L 140 178 M 122 158 L 140 178 L 158 158" stroke="white" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <text x="140" y="230" font-family="-apple-system, Helvetica, sans-serif" font-size="15" font-weight="600" fill="rgba(255,255,255,0.9)" text-anchor="middle">.md</text>
+  <text x="340" y="100" font-family="-apple-system, Helvetica, sans-serif" font-size="22" font-weight="700" fill="white" text-anchor="middle">Medium</text>
+  <text x="340" y="130" font-family="-apple-system, Helvetica, sans-serif" font-size="22" font-weight="700" fill="white" text-anchor="middle">to</text>
+  <text x="340" y="160" font-family="-apple-system, Helvetica, sans-serif" font-size="22" font-weight="700" fill="white" text-anchor="middle">Markdown</text>
+  <text x="340" y="200" font-family="-apple-system, Helvetica, sans-serif" font-size="13" fill="rgba(255,255,255,0.7)" text-anchor="middle">One-click article export</text>
+</svg>

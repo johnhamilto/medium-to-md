@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 560">
+  <rect width="1400" height="560" fill="#1a8917"/>
+  <rect x="60" y="80" width="400" height="400" rx="32" fill="rgba(255,255,255,0.10)"/>
+  <text x="260" y="240" font-family="-apple-system, Helvetica, sans-serif" font-size="140" font-weight="800" fill="white" text-anchor="middle">M</text>
+  <path d="M 260 280 L 260 360 M 228 320 L 260 360 L 292 320" stroke="white" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <text x="260" y="440" font-family="-apple-system, Helvetica, sans-serif" font-size="28" font-weight="600" fill="rgba(255,255,255,0.85)" text-anchor="middle">.md</text>
+  <text x="880" y="200" font-family="-apple-system, Helvetica, sans-serif" font-size="52" font-weight="700" fill="white" text-anchor="middle">Medium to Markdown</text>
+  <text x="880" y="270" font-family="-apple-system, Helvetica, sans-serif" font-size="26" fill="rgba(255,255,255,0.8)" text-anchor="middle">One-click article export to clean Markdown</text>
+  <line x1="780" y1="310" x2="980" y2="310" stroke="rgba(255,255,255,0.25)" stroke-width="2"/>
+  <text x="880" y="360" font-family="Menlo, Consolas, monospace" font-size="20" fill="rgba(255,255,255,0.6)" text-anchor="middle">---</text>
+  <text x="880" y="390" font-family="Menlo, Consolas, monospace" font-size="20" fill="rgba(255,255,255,0.6)" text-anchor="middle">title: Your Article</text>
+  <text x="880" y="420" font-family="Menlo, Consolas, monospace" font-size="20" fill="rgba(255,255,255,0.6)" text-anchor="middle">author: The Author</text>
+  <text x="880" y="450" font-family="Menlo, Consolas, monospace" font-size="20" fill="rgba(255,255,255,0.6)" text-anchor="middle">---</text>
+</svg>

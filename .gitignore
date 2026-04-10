@@ -2,3 +2,4 @@ examples/
 node_modules/
 tests/output/
 dist/
+.DS_Store
