@@ -1,4 +1,4 @@
-import { readFileSync, readdirSync, writeFileSync, mkdirSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync, writeFileSync, mkdirSync } from 'node:fs';
 import { JSDOM } from 'jsdom';
 import { fileURLToPath } from 'node:url';
 import { dirname, join, basename } from 'node:path';
@@ -12,7 +12,13 @@ const mod = { exports: {} };
 new Function('module', 'exports', 'globalThis', converterSrc)(mod, mod.exports, globalThis);
 const { convertMediumToMarkdown } = mod.exports;
 
-const fixturesDir = join(projectRoot, 'examples');
+// Where the harness looks for .html fixtures, in priority order:
+//   tests/fixtures/  — committed, original synthetic fixtures (always present)
+//   examples/        — gitignored, real Medium articles you save locally
+const fixtureRoots = [
+  join(projectRoot, 'tests/fixtures'),
+  join(projectRoot, 'examples'),
+];
 const outputDir = join(projectRoot, 'tests/output');
 mkdirSync(outputDir, { recursive: true });
 
@@ -132,21 +138,29 @@ function excerpt(el) {
 
 // --- Run all fixtures ---------------------------------------------------
 
-const fixtureFiles = readdirSync(fixturesDir)
-  .filter((f) => f.endsWith('.html'))
-  .sort();
+// Walk every fixture root that exists; ignore the ones that don't.
+const fixtures = [];
+for (const root of fixtureRoots) {
+  if (!existsSync(root)) continue;
+  const files = readdirSync(root)
+    .filter((f) => f.endsWith('.html'))
+    .sort();
+  for (const f of files) fixtures.push({ path: join(root, f), file: f });
+}
 
-if (fixtureFiles.length === 0) {
-  console.error(`No fixtures found in ${fixturesDir}.`);
-  process.exit(1);
+if (fixtures.length === 0) {
+  console.log(
+    'No fixtures found. Drop .html files into tests/fixtures/ (committed) or examples/ (local) to test.',
+  );
+  process.exit(0);
 }
 
 let totalChecks = 0;
 let totalFailures = 0;
 
-for (const file of fixtureFiles) {
+for (const { path: fixturePath, file } of fixtures) {
   const name = basename(file, '.html');
-  const html = readFileSync(join(fixturesDir, file), 'utf8');
+  const html = readFileSync(fixturePath, 'utf8');
   const dom = new JSDOM(html);
   const doc = dom.window.document;
 
@@ -183,7 +197,7 @@ for (const file of fixtureFiles) {
 
 console.log();
 if (totalFailures) {
-  console.error(`${totalFailures}/${totalChecks} checks failed across ${fixtureFiles.length} fixture(s).`);
+  console.error(`${totalFailures}/${totalChecks} checks failed across ${fixtures.length} fixture(s).`);
   process.exit(1);
 }
-console.log(`All ${totalChecks} checks passing across ${fixtureFiles.length} fixture(s).`);
+console.log(`All ${totalChecks} checks passing across ${fixtures.length} fixture(s).`);

@@ -1,0 +1,136 @@
+<!doctype html>
+<!--
+  Synthetic Medium-shaped fixture used by the converter test harness.
+  All article content below is original and written for this test.
+  Mirrors the real DOM Medium serves so the converter exercises:
+    - meta-tag metadata extraction
+    - LCA-based body container discovery (split block groups)
+    - h1.pw-post-title and h2.pw-subtitle-paragraph stripping
+    - p.pw-post-body-paragraph filtering vs. UI chrome paragraphs
+    - distinct h2 class patterns (Heading vs. Subheading) -> h2 / h3
+    - pre + sibling spans -> fenced code block with newlines preserved
+    - figure / picture / img with srcset -> ![alt](url)
+    - ul/ol -> markdown lists
+    - inline strong / em / code / a
+-->
+<html lang="en">
+  <head>
+    <title>The Cathedral and the Coffee Shop | by Test Author | Synthetic Publication | Medium</title>
+    <meta property="og:title" content="The Cathedral and the Coffee Shop" />
+    <meta property="og:description" content="A short synthetic article used to exercise the medium-to-md converter end to end." />
+    <meta property="og:url" content="https://medium.com/@testauthor/the-cathedral-and-the-coffee-shop-deadbeef1234" />
+    <meta property="article:author" content="https://medium.com/@testauthor" />
+    <meta property="article:published_time" content="2026-04-01T09:30:00.000Z" />
+    <meta name="author" content="Test Author" />
+    <meta name="twitter:data1" content="3 min read" />
+  </head>
+  <body>
+    <article class="meteredContent">
+      <div class="e">
+        <div class="e">
+          <section>
+            <div>
+              <!-- header block group: title + subtitle + byline + UI chrome -->
+              <div class="gg gh gi gj gk">
+                <div class="v cf">
+                  <div class="cm bd fs ft fu fv">
+                    <h1 id="t1" class="pw-post-title gl gm gn bb go gp" data-testid="storyTitle">The Cathedral and the Coffee Shop</h1>
+                    <h2 id="s1" class="pw-subtitle-paragraph hk gm gn bb b hl">
+                      <strong>Why the best teams build like a cathedral and ship like a coffee shop, and how to keep both alive at the same time.</strong>
+                    </h2>
+                    <p class="bb b ec u eb">--</p>
+                    <p class="bb b bc u eb">Listen</p>
+                    <p class="bb b bc u eb">Share</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- hero image, in its own block group -->
+              <div class="gg gh gi gj gk">
+                <div class="v cf">
+                  <div class="cm bd fs ft fu fv">
+                    <figure class="ml mm mn mo paragraph-image">
+                      <div role="button" tabindex="0" class="mr ms ek mt bd mu">
+                        <span class="eo ep eq ai er es et eu ev speechify-ignore">Press enter or click to view image in full size</span>
+                        <div class="mi mj mk">
+                          <picture>
+                            <source srcSet="https://miro.medium.com/v2/resize:fit:640/format:webp/1*synth_hero.png 640w, https://miro.medium.com/v2/resize:fit:1400/format:webp/1*synth_hero.png 1400w" sizes="100vw" type="image/webp" />
+                            <source data-testid="og" srcSet="https://miro.medium.com/v2/resize:fit:640/1*synth_hero.png 640w, https://miro.medium.com/v2/resize:fit:1400/1*synth_hero.png 1400w" sizes="100vw" />
+                            <img alt="" class="bd ls mv c" width="700" height="382" loading="eager" role="presentation" src="https://miro.medium.com/v2/resize:fit:1400/1*synth_hero.png" />
+                          </picture>
+                        </div>
+                      </div>
+                    </figure>
+                  </div>
+                </div>
+              </div>
+
+              <!-- first body block group -->
+              <div class="gg gh gi gj gk">
+                <div class="v cf">
+                  <div class="cm bd fs ft fu fv">
+                    <p id="b1" class="pw-post-body-paragraph ne nf gn ng b hl">
+                      <em>I have been thinking about how teams ship software, and I keep coming back to two metaphors that seem like opposites but actually need each other.</em>
+                    </p>
+                    <h2 id="h1a" class="ob oc gn bb od oe of hn og oh oi hq">The Cathedral</h2>
+                    <p id="b2" class="pw-post-body-paragraph ne nf gn ng b hl">
+                      A cathedral is built over decades. The people who lay the foundation will not see the spire. Every stone is placed with the assumption that someone you have never met will need to maintain it long after you are gone. That is a powerful constraint, and it produces a particular kind of beauty: load-bearing decisions made carefully, on purpose, with future readers in mind.
+                    </p>
+                    <p id="b3" class="pw-post-body-paragraph ne nf gn ng b hl">
+                      The best codebases I have ever worked in feel a little like this. You can read a function and understand not just what it does, but <strong>why it exists</strong>. The names are stable. The boundaries are deliberate. The tests describe behavior, not implementation. Walking through it feels like wandering a building someone took the time to design.
+                    </p>
+                    <h2 id="h1b" class="ob oc gn bb od oe qd hn og oh qe hq">What Cathedral Code Looks Like</h2>
+                    <p id="b4" class="pw-post-body-paragraph ne nf gn ng b hl">
+                      A few signals I look for:
+                    </p>
+                    <ul>
+                      <li class="ne nf gn ng b hl">Module boundaries that reflect <em>domain</em> concepts, not file-system convenience.</li>
+                      <li class="ne nf gn ng b hl">Tests that survive a refactor without changes, because they test the contract.</li>
+                      <li class="ne nf gn ng b hl">Names a new hire can <strong>read out loud</strong> and immediately guess at the meaning of.</li>
+                    </ul>
+                    <pre class="ml mm mn mo mp pc"><span class="pg oc gn pd b bc">// Cathedral: the contract is the API.<br />function applyDiscount(order, code) {<br />  const rule = discountRules.find((r) =&gt; r.matches(order, code));<br />  return rule ? rule.apply(order) : order;<br />}</span></pre>
+                  </div>
+                </div>
+              </div>
+
+              <!-- second body block group: this is the structural shape that broke griddy -->
+              <div class="gg gh gi gj gk">
+                <div class="v cf">
+                  <div class="cm bd fs ft fu fv">
+                    <h2 id="h2a" class="ob oc gn bb od oe of hn og oh oi hq">The Coffee Shop</h2>
+                    <p id="b5" class="pw-post-body-paragraph ne nf gn ng b hl">
+                      A coffee shop is the opposite. It opens at six. The espresso machine is loud. Someone is going to ask for oat milk in a way that makes you reconsider your career. The whole operation is optimized to <em>respond</em>: to a customer, to a spill, to a sudden rush at 8:15. There is no time for cathedrals at 8:15. You hand someone a cup or you do not.
+                    </p>
+                    <p id="b6" class="pw-post-body-paragraph ne nf gn ng b hl">
+                      The best teams I have worked on can do this too. A bug report comes in, someone reproduces it within the hour, the fix is in main by lunch, and a customer who was about to churn is still a customer at the end of the day. The work is small, fast, and unceremonious. It is a coffee shop, not a cathedral.
+                    </p>
+                    <h2 id="h2b" class="ob oc gn bb od oe qd hn og oh qe hq">When Coffee Shop Mode Wins</h2>
+                    <p id="b7" class="pw-post-body-paragraph ne nf gn ng b hl">
+                      Reach for coffee shop mode when:
+                    </p>
+                    <ol>
+                      <li class="ne nf gn ng b hl">A real user is bleeding right now, and the cost of a small inelegance is lower than the cost of waiting.</li>
+                      <li class="ne nf gn ng b hl">You are at the edge of the system, in glue code that nobody is going to read again.</li>
+                      <li class="ne nf gn ng b hl">The change is reversible, observable, and small enough to fit in your head.</li>
+                    </ol>
+                    <pre class="pl pc pd pm"><span class="pp oc gn pd b pq">// Coffee shop: just unblock the user.<br />if (order.couponCode === &quot;LEGACY10&quot;) {<br />  order.total *= 0.9;<br />}</span></pre>
+                    <h2 id="h1c" class="ob oc gn bb od oe of hn og oh oi hq">Holding Both at Once</h2>
+                    <p id="b8" class="pw-post-body-paragraph ne nf gn ng b hl">
+                      The mistake is to pick one and call it your <code>style</code>. Cathedral-only teams ship slowly and feel righteous about it. Coffee-shop-only teams ship quickly and wake up to a codebase nobody can reason about. Neither is sustainable.
+                    </p>
+                    <p id="b9" class="pw-post-body-paragraph ne nf gn ng b hl">
+                      The teams I admire most do both, and they are honest about which mode they are in. They write the load-bearing parts like a cathedral and they patch the edges like a coffee shop, and they know the difference. <a href="https://example.com/related-thoughts">There is a longer version of this argument elsewhere</a>, but the short version is: tell yourself, out loud, which mode you are in before you start typing.
+                    </p>
+                    <p id="b10" class="pw-post-body-paragraph ne nf gn ng b hl">
+                      <strong>If there is one thing to take away:</strong> the best engineers I know are bilingual. They can build a cathedral on Tuesday and run a coffee shop on Wednesday, and they do not feel guilty about either one.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </article>
+  </body>
+</html>
